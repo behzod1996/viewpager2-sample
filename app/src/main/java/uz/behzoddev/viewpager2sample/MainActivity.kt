@@ -27,6 +27,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun registerOnPageChange() {
+        // To get swipe event of viewPager2
         viewPager2.registerOnPageChangeCallback(object: ViewPager2.OnPageChangeCallback()
         {
             override fun onPageSelected(position: Int) {
