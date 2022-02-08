@@ -20,23 +20,46 @@ class MainActivity : AppCompatActivity() {
         registerOnPageChange()
     }
 
+    override fun onDestroy() {
+        super.onDestroy()
+        unregisterOnPageChange()
+    }
     private fun setupViewPager2() = with(binding) {
-        viewPager2 = binding.viewPager
+        viewPager2 = viewPager
         viewPager2Adapter = ViewPager2Adapter(this@MainActivity)
         viewPager2.adapter = viewPager2Adapter
     }
 
     private fun registerOnPageChange() {
         // To get swipe event of viewPager2
-        viewPager2.registerOnPageChangeCallback(object: ViewPager2.OnPageChangeCallback()
-        {
-            override fun onPageSelected(position: Int) {
-                super.onPageSelected(position)
-            }
+        viewPager2.registerOnPageChangeCallback(samplePageChangeCallback)
+    }
+    private fun unregisterOnPageChange() {
+        viewPager2.unregisterOnPageChangeCallback(samplePageChangeCallback)
+    }
 
-            override fun onPageScrollStateChanged(state: Int) {
-                super.onPageScrollStateChanged(state)
-            }
-        })
+    // Before
+    /*
+    * viewPager2.registerOnPageChangeCallback(object: ViewPager2.OnPageChangeCallback()
+    * {
+    *  override fun onPageSelected(position: Int) {
+            super.onPageSelected(position)
+        }
+
+        override fun onPageScrollStateChanged(state: Int) {
+            super.onPageScrollStateChanged(state)
+        }
+    * }
+    * )
+    * */
+    // After
+    private val samplePageChangeCallback = object: ViewPager2.OnPageChangeCallback() {
+        override fun onPageSelected(position: Int) {
+            super.onPageSelected(position)
+        }
+
+        override fun onPageScrollStateChanged(state: Int) {
+            super.onPageScrollStateChanged(state)
+        }
     }
 }
